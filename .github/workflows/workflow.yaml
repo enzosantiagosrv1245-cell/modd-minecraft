@@ -1,0 +1,56 @@
+name: Build & Publish Mod
+
+on:
+  push:
+    tags:
+      - 'v*'           # Roda quando criar tags como v1.0.0
+  workflow_dispatch:   # Permite rodar manualmente
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Pega o código do repositório
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Configura Java 17
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # 3. Cache do Gradle
+      - name: Cache Gradle
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: ${{ runner.os }}-gradle
+
+      # 4. Build do mod
+      - name: Build Mod
+        run: ./gradlew build
+
+      # 5. Salva o JAR como artifact (opcional)
+      - name: Upload JAR as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: mod-jar
+          path: build/libs/*.jar
+
+      # 6. Publica no Modrinth
+      - name: Publish to Modrinth
+        uses: Modrinth/modrinth-github-action@v2
+        with:
+          api-token: ${{ secrets.MODRINTH_API_TOKEN }}  # Token seguro no GitHub Secrets
+          project-id: 'gNEYS3Dx'                        # Seu project ID no Modrinth
+          version-number: ${{ github.ref_name }}        # Usa a tag como número da versão
+          loaders: '["fabric"]'                         # ou ["forge"] se for Forge
+          game-versions: '["1.20"]'                     # versão do Minecraft compatível
+          file: 'build/libs/*.jar'                      # caminho do .jar
+          changelog: 'Atualização automática via GitHub Actions'
