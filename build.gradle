@@ -1,58 +1,64 @@
 // build.gradle
-// Gradle 8+ compatível com Forge 1.19/1.20
+
+buildscript {
+    repositories {
+        maven {
+            url = 'https://maven.minecraftforge.net/'
+        }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:6.0.44'
+    }
+}
+
 plugins {
-    id 'net.minecraftforge.gradle' version '6.0.44' // versão estável para ForgeGradle 6
     id 'java'
 }
 
-group = 'com.yourname.lawyermod'
+apply plugin: 'net.minecraftforge.gradle'
+
+group = 'com.yourname'
 version = '1.0.0'
-description = 'Lawyer Mod for Minecraft'
+archivesBaseName = 'lawyermod'
+
+sourceCompatibility = '17'
+targetCompatibility = '17'
 
 repositories {
     mavenCentral()
     maven {
-        name = 'Forge'
         url = 'https://maven.minecraftforge.net/'
     }
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17) // Java 17
-    }
-}
-
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.20.1-46.2.0' // Substitua pela versão do Forge que você quer
+    minecraft 'net.minecraftforge:forge:1.20.1-46.2.0'
 }
 
 minecraft {
-    // configuração do Forge
+    // Configura a versão do Forge
     mappings channel: 'official', version: '1.20.1'
     runs {
         client {
             workingDirectory project.file('run')
-            property 'forge.logging.console.level', 'debug'
-            mods {
-                lawyermod {
-                    source sourceSets.main
-                }
-            }
+            args '--username', 'Player'
         }
         server {
             workingDirectory project.file('run')
-            property 'forge.logging.console.level', 'debug'
-            mods {
-                lawyermod {
-                    source sourceSets.main
-                }
-            }
         }
     }
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-    options.release.set(17)
+jar {
+    manifest {
+        attributes(
+            'Specification-Title': 'LawyerMod',
+            'Specification-Vendor': 'YourName',
+            'Specification-Version': version,
+            'Implementation-Title': project.name,
+            'Implementation-Version': version,
+            'Implementation-Vendor': 'YourName'
+        )
+    }
 }
