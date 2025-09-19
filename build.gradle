@@ -1,44 +1,60 @@
+// build.gradle
+plugins {
+    id 'java'
+}
+
+group = 'com.yourname' // seu pacote
+version = '1.0.0'
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+repositories {
+    maven {
+        url = 'https://maven.minecraftforge.net/'
+    }
+    mavenCentral()
+}
+
 buildscript {
     repositories {
         maven {
-            name = "forge"
-            url = "https://maven.minecraftforge.net/"
+            url = 'https://maven.minecraftforge.net/'
         }
         mavenCentral()
     }
     dependencies {
-       classpath 'net.minecraftforge.gradle:ForgeGradle:6.1.+'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:6.0.44'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'java'
-
-group = 'com.yourname.lawyermod'
-version = '1.0.0'
-archivesBaseName = 'lawyermod'
-
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
 
 minecraft {
-    version = "1.20.1-47.1.0"
+    version = "1.20.1-47.1.0" // versão do Forge
     runDir = "run"
+    mappings channel: 'official', version: '1.20.1'
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.20.1-47.1.0'
 }
 
-repositories {
-    mavenCentral()
-    maven {
-        name = "forge"
-        url = "https://maven.minecraftforge.net/"
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    archiveBaseName.set('lawyermod')
+    archiveVersion.set(version)
+    from(sourceSets.main.output)
+    manifest {
+        attributes(
+                'Specification-Title': 'LawyerMod',
+                'Specification-Vendor': 'YourName',
+                'Specification-Version': version,
+                'Implementation-Title': 'LawyerMod',
+                'Implementation-Version': version,
+                'Implementation-Vendor': 'YourName'
+        )
     }
-}
-
-dependencies {
-    // Substitua a versão do Forge se precisar
-    minecraft 'net.minecraftforge:forge:1.20.1-47.1.0'
 }
