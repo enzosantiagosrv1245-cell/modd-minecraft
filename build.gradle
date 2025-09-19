@@ -1,19 +1,16 @@
-// build.gradle
 plugins {
     id 'fabric-loom' version '1.6-SNAPSHOT'
     id 'java'
 }
 
-group = 'com.seumod'
+group = 'com.lawyermod'
 version = '1.0.0'
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
 repositories {
     mavenCentral()
-    maven {
-        url = 'https://maven.fabricmc.net/'
-    }
+    maven { url = 'https://maven.fabricmc.net/' }
 }
 
 dependencies {
@@ -35,7 +32,6 @@ tasks.withType(JavaCompile) {
 }
 
 loom {
-    // Configurações específicas do Fabric Loom
-    accessWidenerPath = file("src/main/resources/seumod.accesswidener")
+    // Se você tiver um access widener, descomente a linha abaixo
+    // accessWidenerPath = file("src/main/resources/lawyermod.accesswidener")
 }
-

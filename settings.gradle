@@ -1,1 +1,9 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()           // Repositório padrão do Gradle
+        maven { url = 'https://maven.fabricmc.net/' }  // Repositório da Fabric
+        mavenCentral()                 // Maven Central
+    }
+}
+
 rootProject.name = 'lawyermod'
