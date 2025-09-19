@@ -6,15 +6,8 @@ license="MIT"
 modId="lawyermod"
 version="1.0.0"
 displayName="Lawyer Mod"
-updateJSONURL=""
-displayURL=""
-logoFile=""
-credits="Criado para servidor de Minecraft"
+description="Sistema de advogados e anjos para Minecraft"
 authors="YourName"
-description='''
-Mod que adiciona sistema de advogados ao Minecraft.
-Permite que jogadores assumam a função de advogado e julguem outros jogadores.
-'''
 
 [[dependencies.lawyermod]]
 modId="forge"
