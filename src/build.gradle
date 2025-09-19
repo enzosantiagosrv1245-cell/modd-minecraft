@@ -1,89 +1,41 @@
 cat > build.gradle << 'EOF'
-buildscript {
-    repositories {
-        maven {
-            name = 'MinecraftForge'
-            url = 'https://maven.minecraftforge.net'
-        }
-        gradlePluginPortal()
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.53', changing: true
-    }
+plugins {
+    id 'java'
 }
-
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
 
 version = '1.0.0'
 group = 'com.yourname.lawyermod'
 archivesBaseName = 'lawyermod'
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '17'
-
-minecraft {
-    mappings channel: 'official', version: '1.18.2'
-
-    runs {
-        client {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', 'lawyermod'
-
-            mods {
-                lawyermod {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        server {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', 'lawyermod'
-
-            mods {
-                lawyermod {
-                    source sourceSets.main
-                }
-            }
-        }
-    }
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 repositories {
     mavenCentral()
-}
-
-dependencies {
-    minecraft 'net.minecraftforge:forge:1.18.2-40.2.0'
-}
-
-jar {
-    manifest {
-        attributes([
-                "Specification-Title"     : "lawyermod",
-                "Specification-Vendor"    : "yourname",
-                "Specification-Version"   : "1",
-                "Implementation-Title"    : project.name,
-                "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "yourname",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-        ])
+    maven {
+        name = 'Mojang'
+        url = 'https://libraries.minecraft.net/'
     }
 }
 
-jar.finalizedBy('reobfJar')
+dependencies {
+    // Dependências mínimas
+}
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            artifact jar
-        }
+jar {
+    from sourceSets.main.output
+    archiveBaseName = 'lawyermod'
+    archiveVersion = '1.0.0'
+    
+    manifest {
+        attributes([
+            "Specification-Title": "lawyermod",
+            "Specification-Version": "1.0.0",
+            "Implementation-Title": project.name,
+            "Implementation-Version": project.version
+        ])
     }
 }
 EOF
