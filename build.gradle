@@ -1,37 +1,41 @@
-plugins {
-    id 'fabric-loom' version '1.5.5'  // versão estável compatível
-    id 'java'
+buildscript {
+    repositories {
+        maven {
+            name = "forge"
+            url = "https://maven.minecraftforge.net/"
+        }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:5.1.+'
+    }
 }
 
-group = 'com.lawyermod'
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'java'
+
+group = 'com.yourname.lawyermod'
 version = '1.0.0'
+archivesBaseName = 'lawyermod'
+
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
+minecraft {
+    // Substitua pela versão que você quer
+    version = "1.20.1-47.1.0"
+    runDir = "run"
+}
+
 repositories {
     mavenCentral()
-    maven { url = 'https://maven.fabricmc.net/' }
+    maven {
+        name = "forge"
+        url = "https://maven.minecraftforge.net/"
+    }
 }
 
 dependencies {
-    // Dependências do Minecraft
-    minecraft "com.mojang:minecraft:1.20.1"
-    mappings "net.fabricmc:yarn:1.20.1+build.1:v2"
-    modImplementation "net.fabricmc:fabric-loader:0.15.5"
-
-    // Dependências do Fabric API
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.88.0+1.20.1"
-}
-
-java {
-    withSourcesJar()
-}
-
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
-
-loom {
-    // Se você tiver um access widener, descomente a linha abaixo
-    // accessWidenerPath = file("src/main/resources/lawyermod.accesswidener")
+    // Substitua a versão do Forge se precisar
+    minecraft 'net.minecraftforge:forge:1.20.1-47.1.0'
 }
