@@ -1,60 +1,62 @@
-// build.gradle
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net/' }
         mavenCentral()
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:6.1.+'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:6.0.44'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
 
-group = 'com.yourname.lawyermod'
+group = 'com.yourname.lawyermod' // Substitua pelo seu pacote
 version = '1.0.0'
-archivesBaseName = 'lawyermod'
 
 minecraft {
+    version = "1.20.1-45.1.0" // Forge que você quer
+    runDir = "run"
     mappings channel: 'official', version: '1.20.1'
-    runs {
-        client {
-            workingDirectory project.file('run')
-            property 'forge.logging.console.level', 'debug'
-            mods {
-                lawyermod {
-                    source sourceSets.main
-                }
-            }
-        }
-        server {
-            workingDirectory project.file('run')
-            property 'forge.logging.console.level', 'debug'
-            mods {
-                lawyermod {
-                    source sourceSets.main
-                }
-            }
-        }
-    }
 }
 
 repositories {
-    mavenCentral()
     maven { url = 'https://maven.minecraftforge.net/' }
+    mavenCentral()
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.20.1-46.1.0'
+    // Nenhuma dependência externa por enquanto
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17) // Minecraft 1.20.x
+    }
 }
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
-    options.release = 17
+    options.release.set(17)
 }
 
-tasks.jar {
-    archiveBaseName.set('lawyermod')
+tasks.processResources {
+    inputs.property("version", project.version)
+    filesMatching("META-INF/mods.toml") {
+        expand "version": project.version
+    }
+}
+
+jar {
+    archiveBaseName.set("lawyermod")
     archiveVersion.set(project.version)
-    from(sourceSets.main.output)
+    manifest {
+        attributes(
+            "Specification-Title": "LawyerMod",
+            "Specification-Vendor": "YourName",
+            "Specification-Version": project.version,
+            "Implementation-Title": "LawyerMod",
+            "Implementation-Version": project.version,
+            "Implementation-Vendor": "YourName"
+        )
+    }
 }
