@@ -1,62 +1,58 @@
-buildscript {
-    repositories {
-        maven { url = 'https://maven.minecraftforge.net/' }
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:6.0.44'
-    }
+// build.gradle
+// Gradle 8+ compatível com Forge 1.19/1.20
+plugins {
+    id 'net.minecraftforge.gradle' version '6.0.44' // versão estável para ForgeGradle 6
+    id 'java'
 }
 
-apply plugin: 'net.minecraftforge.gradle'
-
-group = 'com.yourname.lawyermod' // Substitua pelo seu pacote
-version = '1.0.0' // Versão do mod
-
-minecraft {
-    version = "1.20.1-45.1.0" // Forge recomendado
-    runDir = "run"
-    mappings channel: 'official', version: '1.20.1'
-}
+group = 'com.yourname.lawyermod'
+version = '1.0.0'
+description = 'Lawyer Mod for Minecraft'
 
 repositories {
-    maven { url = 'https://maven.minecraftforge.net/' }
     mavenCentral()
-}
-
-dependencies {
-    // Dependências extras, se houver
+    maven {
+        name = 'Forge'
+        url = 'https://maven.minecraftforge.net/'
+    }
 }
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17) // Minecraft 1.20.x exige Java 17
+        languageVersion = JavaLanguageVersion.of(17) // Java 17
+    }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.20.1-46.2.0' // Substitua pela versão do Forge que você quer
+}
+
+minecraft {
+    // configuração do Forge
+    mappings channel: 'official', version: '1.20.1'
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                lawyermod {
+                    source sourceSets.main
+                }
+            }
+        }
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                lawyermod {
+                    source sourceSets.main
+                }
+            }
+        }
     }
 }
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
     options.release.set(17)
-}
-
-tasks.processResources {
-    inputs.property("version", project.version)
-    filesMatching("META-INF/mods.toml") {
-        expand "version": project.version
-    }
-}
-
-jar {
-    archiveBaseName.set("lawyermod")
-    archiveVersion.set(project.version)
-    manifest {
-        attributes(
-            "Specification-Title": "LawyerMod",
-            "Specification-Vendor": "YourName",
-            "Specification-Version": project.version,
-            "Implementation-Title": "LawyerMod",
-            "Implementation-Version": project.version,
-            "Implementation-Vendor": "YourName"
-        )
-    }
 }
