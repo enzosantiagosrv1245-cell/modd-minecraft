@@ -1,5 +1,3 @@
-// build.gradle
-
 buildscript {
     repositories {
         maven {
@@ -33,12 +31,15 @@ repositories {
 }
 
 dependencies {
+    // Forge 1.20.1
     minecraft 'net.minecraftforge:forge:1.20.1-46.2.0'
 }
 
 minecraft {
-    // Configura a versão do Forge
+    // Configura o mapeamento oficial
     mappings channel: 'official', version: '1.20.1'
+    
+    // Configuração de run para client e server
     runs {
         client {
             workingDirectory project.file('run')
@@ -50,15 +51,9 @@ minecraft {
     }
 }
 
-jar {
-    manifest {
-        attributes(
-            'Specification-Title': 'LawyerMod',
-            'Specification-Vendor': 'YourName',
-            'Specification-Version': version,
-            'Implementation-Title': project.name,
-            'Implementation-Version': version,
-            'Implementation-Vendor': 'YourName'
-        )
+// Evita problemas de dependência com Gradle 8+
+configurations.all {
+    resolutionStrategy {
+        cacheChangingModulesFor 0, 'seconds'
     }
 }
