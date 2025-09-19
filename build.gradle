@@ -1,25 +1,7 @@
 // build.gradle
-plugins {
-    id 'java'
-}
-
-group = 'com.yourname' // seu pacote
-version = '1.0.0'
-sourceCompatibility = '17'
-targetCompatibility = '17'
-
-repositories {
-    maven {
-        url = 'https://maven.minecraftforge.net/'
-    }
-    mavenCentral()
-}
-
 buildscript {
     repositories {
-        maven {
-            url = 'https://maven.minecraftforge.net/'
-        }
+        maven { url = 'https://maven.minecraftforge.net/' }
         mavenCentral()
     }
     dependencies {
@@ -28,9 +10,20 @@ buildscript {
 }
 
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'java'
+
+group = 'com.yourname'
+version = '1.0.0'
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+repositories {
+    maven { url = 'https://maven.minecraftforge.net/' }
+    mavenCentral()
+}
 
 minecraft {
-    version = "1.20.1-47.1.0" // versão do Forge
+    version = "1.20.1-47.1.0"
     runDir = "run"
     mappings channel: 'official', version: '1.20.1'
 }
