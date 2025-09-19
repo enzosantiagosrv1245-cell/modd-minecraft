@@ -18,15 +18,19 @@ repositories {
         name = 'Forge'
         url = 'https://maven.minecraftforge.net/'
     }
+    maven {
+        name = 'Parchment'
+        url = 'https://maven.parchmentmc.org/'
+    }
     mavenCentral()
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.20.1-47.3.0' // Atualizei pra versão mais recente
+    minecraft 'net.minecraftforge:forge:1.20.1-47.3.10' // Confirme a versão
 }
 
 minecraft {
-    mappings channel: 'official', version: '1.20.1' // Ou use 'parchment' se preferir
+    mappings channel: 'parchment', version: '2024.07.28-1.20.1' // Ajuste para a versão correta do Parchment
     runs {
         client {
             workingDirectory project.file('run')
