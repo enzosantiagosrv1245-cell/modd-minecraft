@@ -5,49 +5,56 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:6.0.44'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:6.1.+'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'java'
 
-group = 'com.yourname'
+group = 'com.yourname.lawyermod'
 version = '1.0.0'
-sourceCompatibility = '17'
-targetCompatibility = '17'
-
-repositories {
-    maven { url = 'https://maven.minecraftforge.net/' }
-    mavenCentral()
-}
+archivesBaseName = 'lawyermod'
 
 minecraft {
-    version = "1.20.1-47.1.0"
-    runDir = "run"
     mappings channel: 'official', version: '1.20.1'
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                lawyermod {
+                    source sourceSets.main
+                }
+            }
+        }
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                lawyermod {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://maven.minecraftforge.net/' }
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.20.1-47.1.0'
+    minecraft 'net.minecraftforge:forge:1.20.1-46.1.0'
 }
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+    options.release = 17
 }
 
-jar {
+tasks.jar {
     archiveBaseName.set('lawyermod')
-    archiveVersion.set(version)
+    archiveVersion.set(project.version)
     from(sourceSets.main.output)
-    manifest {
-        attributes(
-                'Specification-Title': 'LawyerMod',
-                'Specification-Vendor': 'YourName',
-                'Specification-Version': version,
-                'Implementation-Title': 'LawyerMod',
-                'Implementation-Version': version,
-                'Implementation-Vendor': 'YourName'
-        )
-    }
 }
