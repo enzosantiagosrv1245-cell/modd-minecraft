@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "meumod",
+  "version": "1.0.0",
+  "name": "Meu Mod",
+  "description": "Um mod de exemplo com Mixin",
+  "authors": ["Seu Nome"],
+  "contact": {},
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {},
+  "mixins": [
+    "mixins.meumod.json"
+  ]
+}

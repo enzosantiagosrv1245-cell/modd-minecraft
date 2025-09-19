@@ -1,0 +1,31 @@
+modLoader="javafml"
+loaderVersion="[41,)"
+license="MIT"
+
+[[mods]]
+modId="lawyermod"
+version="1.0.0"
+displayName="Lawyer Mod"
+updateJSONURL=""
+displayURL=""
+logoFile=""
+credits="Criado para servidor de Minecraft"
+authors="YourName"
+description='''
+Mod que adiciona sistema de advogados ao Minecraft.
+Permite que jogadores assumam a função de advogado e julguem outros jogadores.
+'''
+
+[[dependencies.lawyermod]]
+modId="forge"
+mandatory=true
+versionRange="[41.1.0,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.lawyermod]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.18.2,1.19)"
+ordering="NONE"
+side="BOTH"
