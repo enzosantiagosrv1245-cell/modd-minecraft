@@ -1,41 +1,39 @@
-cat > build.gradle << 'EOF'
 plugins {
-    id 'java'
+    id 'fabric-loom' version '1.6-SNAPSHOT'
 }
 
 version = '1.0.0'
 group = 'com.yourname.lawyermod'
 archivesBaseName = 'lawyermod'
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-}
-
 repositories {
     mavenCentral()
     maven {
-        name = 'Mojang'
-        url = 'https://libraries.minecraft.net/'
+        name = "Fabric"
+        url = "https://maven.fabricmc.net/"
     }
 }
 
 dependencies {
-    // Dependências mínimas
+    minecraft "com.mojang:minecraft:1.20.1"
+    mappings "net.fabricmc:yarn:1.20.1+build.10:v2"
+    modImplementation "net.fabricmc:fabric-loader:0.15.7"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.92.0+1.20.1"
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+    withSourcesJar()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = "UTF-8"
 }
 
 jar {
-    from sourceSets.main.output
-    archiveBaseName = 'lawyermod'
-    archiveVersion = '1.0.0'
-    
-    manifest {
-        attributes([
-            "Specification-Title": "lawyermod",
-            "Specification-Version": "1.0.0",
-            "Implementation-Title": project.name,
-            "Implementation-Version": project.version
-        ])
+    from("LICENSE") {
+        rename { "${it}_${archivesBaseName}" }
     }
 }
-EOF
