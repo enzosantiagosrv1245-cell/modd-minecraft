@@ -7,7 +7,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:5.1.+'
+       classpath 'net.minecraftforge.gradle:ForgeGradle:6.1.+'
     }
 }
 
@@ -22,9 +22,12 @@ sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
 minecraft {
-    // Substitua pela versão que você quer
     version = "1.20.1-47.1.0"
     runDir = "run"
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.20.1-47.1.0'
 }
 
 repositories {
