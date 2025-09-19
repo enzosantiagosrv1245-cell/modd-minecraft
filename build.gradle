@@ -11,10 +11,10 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 
 group = 'com.yourname.lawyermod' // Substitua pelo seu pacote
-version = '1.0.0'
+version = '1.0.0' // Versão do mod
 
 minecraft {
-    version = "1.20.1-45.1.0" // Forge que você quer
+    version = "1.20.1-45.1.0" // Forge recomendado
     runDir = "run"
     mappings channel: 'official', version: '1.20.1'
 }
@@ -25,12 +25,12 @@ repositories {
 }
 
 dependencies {
-    // Nenhuma dependência externa por enquanto
+    // Dependências extras, se houver
 }
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17) // Minecraft 1.20.x
+        languageVersion = JavaLanguageVersion.of(17) // Minecraft 1.20.x exige Java 17
     }
 }
 
