@@ -1,49 +1,35 @@
-buildscript {
-    repositories {
-        maven {
-            url = 'https://maven.minecraftforge.net/'
-        }
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:6.0.44'
-    }
-}
-
 plugins {
+    id 'net.minecraftforge.gradle' version '6.0.44'
     id 'java'
 }
 
-apply plugin: 'net.minecraftforge.gradle'
-
-group = 'com.yourname'
+group = 'com.yourname.lawyermod'
 version = '1.0.0'
 archivesBaseName = 'lawyermod'
 
-sourceCompatibility = '17'
-targetCompatibility = '17'
-
-repositories {
-    mavenCentral()
-    maven {
-        url = 'https://maven.minecraftforge.net/'
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
+repositories {
+    maven {
+        name = 'Forge'
+        url = 'https://maven.minecraftforge.net/'
+    }
+    mavenCentral()
+}
+
 dependencies {
-    // Forge 1.20.1
-    minecraft 'net.minecraftforge:forge:1.20.1-46.2.0'
+    minecraft 'net.minecraftforge:forge:1.20.1-47.3.0' // Atualizei pra versão mais recente
 }
 
 minecraft {
-    // Configura o mapeamento oficial
-    mappings channel: 'official', version: '1.20.1'
-    
-    // Configuração de run para client e server
+    mappings channel: 'official', version: '1.20.1' // Ou use 'parchment' se preferir
     runs {
         client {
             workingDirectory project.file('run')
-            args '--username', 'Player'
         }
         server {
             workingDirectory project.file('run')
@@ -51,9 +37,18 @@ minecraft {
     }
 }
 
-// Evita problemas de dependência com Gradle 8+
-configurations.all {
-    resolutionStrategy {
-        cacheChangingModulesFor 0, 'seconds'
+jar {
+    from sourceSets.main.output
+    archiveBaseName.set('lawyermod')
+    archiveVersion.set('1.0.0')
+    manifest {
+        attributes(
+            'Specification-Title': 'LawyerMod',
+            'Specification-Vendor': 'YourName',
+            'Specification-Version': version,
+            'Implementation-Title': project.name,
+            'Implementation-Version': version,
+            'Implementation-Vendor': 'YourName'
+        )
     }
 }
