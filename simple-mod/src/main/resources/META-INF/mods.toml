@@ -1,18 +1,18 @@
 modLoader="javafml"
-loaderVersion="[41,)"
+loaderVersion="[40,)"
 license="MIT"
 
 [[mods]]
 modId="lawyermod"
 version="1.0.0"
 displayName="Lawyer Mod"
-description="Sistema de advogados e anjos para Minecraft"
+description="Sistema de advogados e anjos para Minecraft. Funcoes: Advogado (julgar jogadores) e Anjo (imortalidade, voo, cura)."
 authors="YourName"
 
 [[dependencies.lawyermod]]
 modId="forge"
 mandatory=true
-versionRange="[41.1.0,)"
+versionRange="[40.0,)"
 ordering="NONE"
 side="BOTH"
 
